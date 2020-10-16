@@ -1,0 +1,17 @@
+{
+  "name": "covid_node_bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start:bot": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "node-cron": "^2.0.3",
+    "node-fetch": "^2.6.1",
+    "telebot": "^1.4.1"
+  }
+}
