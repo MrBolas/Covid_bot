@@ -3,7 +3,7 @@ const fetch = require("node-fetch");
 const Message = require("./message");
 const cron = require('node-cron');
 
-const bot = new TeleBot("1284369386:AAF1C2bySHiYJmqcFJdYq4vZhia-TXij5gs");
+const bot = new TeleBot("1081272844:AAG8NC5t1jtStJ7V7T6s_mp1Twd2Wo6FqUo");
 const base_url = 'https://corona.lmao.ninja/v2/countries/';
 
 let latest_update= 0;
