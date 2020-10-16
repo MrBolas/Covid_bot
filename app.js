@@ -6,8 +6,7 @@ const cron = require('node-cron');
 const bot = new TeleBot("1081272844:AAG8NC5t1jtStJ7V7T6s_mp1Twd2Wo6FqUo");
 const base_url = 'https://corona.lmao.ninja/v2/countries/';
 
-
-let latest_update= 0;
+let latest_number_of_cases = 0;
 let chats_to_update=[];
 
 //Cron stuff
@@ -15,18 +14,20 @@ let chats_to_update=[];
 cron.schedule('* * * * *', function() {
   getData(base_url+'Portugal')
   .then(country_data => {
-    if (country_data.updated > latest_update) {
-      latest_update = country_data.updated;
+    if (country_data.cases > latest_number_of_cases) {
+      latest_number_of_cases = country_data.cases;
+      console.log(country_data)
       let custom_message = new Message(country_data);
       chats_to_update.forEach(chat => {
         bot.sendMessage(chat,custom_message.getMessage())
       });
+      console.info(`Data Updated. Latest cases: ${latest_number_of_cases}`);
+      console.log(chats_to_update);
     }
   })
   .catch(err => {
       console.error(err);
   })
-  console.info('Updated Data')
 });
 
 const getData = async url => {
@@ -46,6 +47,9 @@ bot.on('/subscribe', (msg) => {
     chats_to_update.push(msg.chat.id);
     msg.reply.text('Chat Subscribed.')
   }else{
+    chats_to_update.filter(chat => {
+      chat != msg.chat.id;
+    })
     msg.reply.text('Chat Unsubscribed.')
   }
 })
