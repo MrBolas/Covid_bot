@@ -16,18 +16,17 @@ cron.schedule('* * * * *', function() {
   .then(country_data => {
     if (country_data.cases > latest_number_of_cases) {
       latest_number_of_cases = country_data.cases;
-      console.log(country_data)
       let custom_message = new Message(country_data);
       chats_to_update.forEach(chat => {
         bot.sendMessage(chat,custom_message.getMessage())
       });
       console.info(`Data Updated. Latest cases: ${latest_number_of_cases}`);
-      console.log(chats_to_update);
     }
   })
   .catch(err => {
-      console.error(err);
+    console.error(err);
   })
+  console.log(`Chats to update: ${chats_to_update}`);
 });
 
 const getData = async url => {
