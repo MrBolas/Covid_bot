@@ -6,6 +6,7 @@ const cron = require('node-cron');
 const bot = new TeleBot("1081272844:AAG8NC5t1jtStJ7V7T6s_mp1Twd2Wo6FqUo");
 const base_url = 'https://corona.lmao.ninja/v2/countries/';
 
+
 let latest_update= 0;
 let chats_to_update=[];
 
