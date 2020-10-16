@@ -46,7 +46,7 @@ bot.on('/subscribe', (msg) => {
     chats_to_update.push(msg.chat.id);
     msg.reply.text('Chat Subscribed.')
   }else{
-    chats_to_update.filter(chat => {
+    chats_to_update = chats_to_update.filter(chat => {
       chat != msg.chat.id;
     })
     msg.reply.text('Chat Unsubscribed.')
