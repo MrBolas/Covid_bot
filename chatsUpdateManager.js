@@ -43,6 +43,12 @@ class chatUpdateManager {
         })
     }
 
+    getSubscriptions(chat_id){
+        return this.update_list.filter((list_entry) => {
+            return list_entry.chatId == chat_id
+        })
+    }
+
     getList(){
         return this.update_list;
     }

@@ -49,10 +49,14 @@ bot.on('/subscribe', (msg) => {
   if(!chatManager.isSubscriptionInList(chat_id,country)){
     getData(base_url+country)
     .then(country_data => {
-      let number_of_cases = country_data.cases;
-      chatManager.addNewChat(chat_id, country, number_of_cases);
-      console.info(`${chat_id} Subscribed`)
-      msg.reply.text(`${country} Subscribed`);
+      if (country_data.country != undefined) {
+        let number_of_cases = country_data.cases;
+        chatManager.addNewChat(chat_id, country, number_of_cases);
+        console.info(`${chat_id} Subscribed`)
+        msg.reply.text(`${country} Subscribed`);
+      }else{
+        msg.reply.text(`${country} not in API`);
+      }
     })
     .catch(err => {
       msg.reply.text(err);
@@ -82,6 +86,17 @@ bot.on('/covid', (msg) => {
       msg.reply.text(err);
   })
 });
+
+bot.on('/subscriptions', (msg) => {
+  let chat_id = msg.chat.id;
+  let subscriptions = chatManager.getSubscriptions(chat_id)
+
+  let message='Current Subscriptions:\n';
+  for (const subscription of subscriptions) {
+      message = message + `${subscription.country}\n`
+  }
+  msg.reply.text(message);
+})
 
 bot.on('/log', (msg) => {
   console.log(chatManager.getList())
