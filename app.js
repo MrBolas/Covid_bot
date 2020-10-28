@@ -13,7 +13,6 @@ let chatManager = new chatUpdateManager;
 cron.schedule('* * * * *', function() {
   const subscriptionList = chatManager.getList();
   for (const list_entry of subscriptionList) {
-    console.log(chatManager.getList())
     getData(base_url+list_entry.country)
     .then(country_data => {
       if (country_data.cases > list_entry.number_of_cases) {
