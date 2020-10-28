@@ -51,7 +51,8 @@ bot.on('/subscribe', (msg) => {
     .then(country_data => {
       if (country_data.country != undefined) {
         let number_of_cases = country_data.cases;
-        chatManager.addNewChat(chat_id, country, number_of_cases);
+        let request_author = `${msg.from.first_name} ${msg.from.last_name}`;
+        chatManager.addNewChat(chat_id, country, number_of_cases, request_author);
         console.info(`${chat_id} Subscribed`)
         msg.reply.text(`${country} Subscribed`);
       }else{

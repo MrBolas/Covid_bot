@@ -22,8 +22,9 @@ class chatUpdateManager {
         }
     }
 
-    addNewChat(chat_id, country, number_of_cases){
+    addNewChat(chat_id, country, number_of_cases, request_author){
         let newChatRequest = {
+            author: request_author,
             chatId: chat_id,
             country: country,
             number_of_cases: number_of_cases
