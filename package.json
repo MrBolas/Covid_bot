@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^8.2.0",
     "node-cron": "^2.0.3",
     "node-fetch": "^2.6.1",
     "telebot": "^1.4.1"
