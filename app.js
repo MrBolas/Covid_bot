@@ -3,6 +3,7 @@ const fetch = require("node-fetch");
 const Message = require("./message");
 const cron = require('node-cron');
 const chatUpdateManager = require('./chatsUpdateManager');
+const DJ = require('./musicManager');
 require('dotenv').config();
 
 const bot = new TeleBot(`${process.env.BOT_KEY}`);
@@ -18,7 +19,9 @@ cron.schedule('* * * * *', function() {
       if (country_data.cases > list_entry.number_of_cases) {
         list_entry.number_of_cases = country_data.cases;
         let custom_message = new Message(country_data);
+        let song = DJ.getRandomSong();
         bot.sendMessage(list_entry.chatId,custom_message.getMessage())
+        bot.sendVoice(chat_id,song.filepath,song.metadata);
         console.info(`Data Updated. Latest cases for ${list_entry.country}: ${list_entry.number_of_cases}`);
       }
     })
@@ -70,6 +73,7 @@ bot.on('/subscribe', (msg) => {
 })
 
 bot.on('/covid', (msg) => {
+  let chat_id = msg.chat.id;
   let country = msg.text.split(' ')[1];
 
   if(country == undefined)
@@ -79,12 +83,12 @@ bot.on('/covid', (msg) => {
 
   getData(base_url+country)
   .then(country_data => {
-      let custom_message = new Message(country_data);
-      msg.reply.text(custom_message.getMessage())
+    let custom_message = new Message(country_data);
+    msg.reply.text(custom_message.getMessage())
   })
   .catch(err => {
-      console.error(err);
-      msg.reply.text(err);
+    console.error(err);
+    msg.reply.text(err);
   })
 });
 
@@ -97,6 +101,14 @@ bot.on('/subscriptions', (msg) => {
       message = message + `${subscription.country}\n`
   }
   msg.reply.text(message);
+})
+
+//unofficial commands
+
+bot.on('/DJ', (msg) => {
+  let chat_id = msg.chat.id;
+  let song = DJ.getRandomSong();
+  bot.sendVoice(chat_id,song.filepath,song.metadata);
 })
 
 bot.on('/log', (msg) => {
