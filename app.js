@@ -21,7 +21,7 @@ cron.schedule('* * * * *', function() {
         let custom_message = new Message(country_data);
         let song = DJ.getRandomSong();
         bot.sendMessage(list_entry.chatId,custom_message.getMessage())
-        bot.sendVoice(chat_id,song.filepath,song.metadata);
+        bot.sendVoice(list_entry.chatId,song.filepath,song.metadata);
         console.info(`Data Updated. Latest cases for ${list_entry.country}: ${list_entry.number_of_cases}`);
       }
     })
